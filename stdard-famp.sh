@@ -45,8 +45,8 @@ pkg install -y mysql80-server
 # Add service to be fired up at boot time
 sysrc mysql_enable="YES"
 
-# Install PHP 7.3 and its 'funny' dependencies
-pkg install -y php73 php73-mysqli mod_php73 php73-extensions
+# Install PHP 8.2 and its 'funny' dependencies
+pkg install -y php82 php82-mysqli mod_php82 php82-extensions
 
 # Install the 'old fashioned' Expect to automate the mysql_secure_installation part
 pkg install -y expect
