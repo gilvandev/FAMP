@@ -69,14 +69,14 @@ pkg install -y bash pwgen expect
 sed -i -e '/memory_limit/s/128M/512M/' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
-pkg install -y php81-zip php81-mbstring php81-gd php81-zlib php81-curl php81-pdo_mysql php81-pecl-imagick php81-intl php81-bcmath php81-gmp php81-fileinfo
+pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-24.0.3.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-24.0.3.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
