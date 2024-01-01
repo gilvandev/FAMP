@@ -43,13 +43,13 @@ openssl genrsa 2048 > /usr/local/tls/ca-key.pem
 
 # Generate the CA certificate from the primary key
 echo "Producing the primary certificate with the CA's key."
-openssl req -new -x509 -nodes -days 730 -key /usr/local/tls/ca-key.pem -out /usr/local/tls/ca-cert.pem -subj "/C=US/ST=State/L=City/O=Adminbyaccident Ltd/CN=example.com/emailAddress=youremail@anymail.com"
+openssl req -new -x509 -nodes -days 730 -key /usr/local/tls/ca-key.pem -out /usr/local/tls/ca-cert.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
 
 # Generate the server's key and certificate pair
 echo "Generating serve's key and certificate pair."
 
 # 1.- Generate a new key for the server plus a certificate request
-openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/server-key.pem -out /usr/local/tls/server-req.pem -subj "/C=US/ST=State/L=City/O=Adminbyaccident Ltd/CN=example.com/emailAddress=youremail@anymail.com"
+openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/server-key.pem -out /usr/local/tls/server-req.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
 
 # 2.- Strip out the passphrase within the key
 openssl rsa -in /usr/local/tls/server-key.pem -out /usr/local/tls/server-key.pem
@@ -63,7 +63,7 @@ echo "Server's certificate and key pair have been generated."
 echo "Generating client's key and certificate pair."
 
 # 1.- Generate a new key for the client plus a certificate request
-openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/client-key.pem -out /usr/local/tls/client-req.pem -subj "/C=US/ST=State/L=City/O=Adminbyaccident Ltd/CN=example.com/emailAddress=youremail@anymail.com"
+openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/client-key.pem -out /usr/local/tls/client-req.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
 
 # 2.- Strip out the passphrase within the key
 openssl rsa -in /usr/local/tls/client-key.pem -out /usr/local/tls/client-key.pem
@@ -105,14 +105,14 @@ pkg install -y mysql80-server
 # Add service to be fired up at boot time
 sysrc mysql_enable="YES"
 
-# Install PHP 8.1 and its 'funny' dependencies
-pkg install -y php81 php81-mysqli php81-extensions
+# Install PHP 8.2 and its 'funny' dependencies
+pkg install -y php82 php82-mysqli php82-extensions
 
 # Install the 'old fashioned' Expect to automate the mysql_secure_installation part
 pkg install -y expect
 
 # Set a ServerName directive in Apache HTTP. Place a name to your server.
-sed -i -e 's/#ServerName www.example.com:80/ServerName California/g' /usr/local/etc/apache24/httpd.conf
+sed -i -e 's/#ServerName drive.infogr.com.br:80/ServerName Sao_Paulo/g' /usr/local/etc/apache24/httpd.conf
 
 # Configure Apache HTTP to use MPM Event instead of the Prefork default
 # Disable the Prefork MPM
@@ -216,16 +216,16 @@ service apache24 restart
 sed -i -e 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
-pkg install -y php81-zip php81-mbstring php81-gd php81-zlib php81-curl php81-pdo_mysql php81-pecl-imagick php81-intl php81-bcmath php81-gmp php81-fileinfo
+pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo
 
 # Configure OPCache for PHP
 sed -i -e '/opcache.enable/s/;opcache.enable=1/opcache.enable=1/' /usr/local/etc/php.ini
 
-sed -i -e '/opcache.memory_consumption/s/;opcache.memory_consumption=128/opcache.memory_consumption=128/' /usr/local/etc/php.ini
+sed -i -e '/opcache.memory_consumption/s/;opcache.memory_consumption=128/opcache.memory_consumption=256/' /usr/local/etc/php.ini
 
-sed -i -e '/opcache.interned_strings_buffer/s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=8/' /usr/local/etc/php.ini
+sed -i -e '/opcache.interned_strings_buffer/s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=12/' /usr/local/etc/php.ini
 
-sed -i -e '/opcache.max_accelerated_files/s/;opcache.max_accelerated_files=4000/opcache.max_accelerated_files=4000/' /usr/local/etc/php.ini
+sed -i -e '/opcache.max_accelerated_files/s/;opcache.max_accelerated_files=4000/opcache.max_accelerated_files=8000/' /usr/local/etc/php.ini
 
 sed -i -e '/opcache.revalidate_freq/s/;opcache.revalidate_freq=60/opcache.revalidate_freq=60/' /usr/local/etc/php.ini
 
@@ -240,10 +240,10 @@ service php-fpm restart
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-24.0.3.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-24.0.3.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
