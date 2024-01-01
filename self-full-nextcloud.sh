@@ -233,6 +233,11 @@ sed -i -e '/opcache.fast_shutdown/s/;opcache.fast_shutdown=1/opcache.fast_shutdo
 
 sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /usr/local/etc/php.ini
 
+# Configuring Uploads
+sed -i -e '/upload_max_filesize/s/;upload_max_filesize=4G/upload_max_filesize=4G/' /usr/local/etc/php.ini
+sed -i -e '/post_max_size/s/;post_max_size=4G/post_max_size=4G/' /usr/local/etc/php.ini
+sed -i -e '/memory_limit/s/;memory_limit=1024M/memory_limit=1024M/' /usr/local/etc/php.ini
+
 echo "Opcache has been configured"
 
 # Restart the PHP-FPM service so it acknowledges the recently installed PHP packages
