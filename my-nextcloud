@@ -37,8 +37,7 @@ pkg install -y expect
 touch /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
 # Add the configuration into the file
-echo "
-<IfModule dir_module>
+echo "<IfModule dir_module>
    DirectoryIndex index.php index.html
    <FilesMatch \"\.php$\"> 
         SetHandler application/x-httpd-php
