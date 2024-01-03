@@ -64,7 +64,7 @@ sed -i '' -e 's/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks 
 
 # 4.- Enabling TLS connections with a self signed certificate. 
 # 4.1- Key and certificate generation
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /usr/local/etc/apache24/server.key -out /usr/local/etc/apache24/server.crt -subj "/C=ES/ST=Barcelona/L=Terrassa/O=Adminbyaccident.com/CN=example.com/emailAddress=yourmail@gmail.com"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /usr/local/etc/apache24/server.key -out /usr/local/etc/apache24/server.crt -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo/CN=infogr.com.br/emailAddress=contato@gilvandev.com"
 
 # Because we have generated a certificate + key we will enable SSL/TLS in the server.
 # 4.3- Enabling TLS connections in the server.
@@ -137,7 +137,7 @@ echo "<IfModule mod_evasive20.c>
 	DOSPageInterval 1
 	DOSSiteInterval 1
 	DOSBlockingPeriod 360
-	DOSEmailNotify youremail@address.com
+	DOSEmailNotify contato@gilvandev.com.br
 	DOSSystemCommand \"su – root -c /sbin/ipfw add 50000 deny %s to any in\"
 	DOSLogDir \"/var/log/mod_evasive\"
 </IfModule>" >> /usr/local/etc/apache24/modules.d/020-mod_evasive.conf
