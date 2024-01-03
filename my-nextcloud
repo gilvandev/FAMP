@@ -37,7 +37,7 @@ pkg install -y expect
 touch /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
 # Add the configuration into the file
-echo " 
+echo "
 <IfModule dir_module>
    DirectoryIndex index.php index.html
    <FilesMatch \"\.php$\"> 
@@ -49,6 +49,7 @@ echo "
 </IfModule>" >> /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
 # Set the PHP's default configuration
+echo "###### Set the PHP's default configuration ######"
 cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
 
 # Fire up the services
