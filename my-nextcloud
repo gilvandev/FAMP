@@ -24,18 +24,18 @@ pkg install -y mysql80-server
 sysrc mysql_enable="YES"
 
 # Install PHP 8.2 and its 'funny' dependencies
-echo "###### Installing PHP 8.2 /usr/local/etc/apache24/modules.d/001_mod-php.conf"
+echo "###### Installing PHP 8.2 ######"
 pkg install -y php82 php82-mysqli mod_php82 php82-extensions
 
 # Install the 'old fashioned' Expect to automate the mysql_secure_installation part
-echo "###### Installing Expect ######"
 pkg install -y expect
 
 # Create configuration file for Apache HTTP to 'speak' PHP
 touch /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
 # Add the configuration into the file
-echo " 
+echo "###### Add the configuration into the file ######"
+echo "
 <IfModule dir_module>
    DirectoryIndex index.php index.html
    <FilesMatch \"\.php$\"> 
@@ -47,13 +47,12 @@ echo "
 </IfModule>" >> /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
 # Set the PHP's default configuration
-echo "###### Set the PHP's default configuration ######"
 cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
 
 # Fire up the services
-echo "###### Starting Apache and MySQL ######"
 service apache24 start
 service mysql-server start
+
 
 # Configure MySQL with the mysql_secure_installation script.
 pkg install -y pwgen
