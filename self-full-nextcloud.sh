@@ -216,7 +216,7 @@ service apache24 restart
 sed -i -e 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
-pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo
+pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo php82-sysvsem php82-exif php82-sodium php-82-bz2
 
 # Configure OPCache for PHP
 sed -i -e '/opcache.enable/s/;opcache.enable=1/opcache.enable=1/' /usr/local/etc/php.ini
@@ -243,12 +243,20 @@ echo "Opcache has been configured"
 # Restart the PHP-FPM service so it acknowledges the recently installed PHP packages
 service php-fpm restart
 
-# Install Nextcloud
+# Install Nextcloud from Nextcloud server
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
+#fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
+#unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
+
+# Install Nextcloud from Github
+# Fetch Nextcloud from GitHub (fatest)
+fetch -o /usr/local/www https://github.com/nextcloud/server/archive/refs/tags/v28.0.1.zip
+
+# Unzip Nextcloud
+unzip -d /usr/local/www/ /usr/local/www/server-28.0.1.zip
+mv /usr/local/www/server-28.0.1 /usr/local/www/nextcloud
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
@@ -467,9 +475,10 @@ su -m www -c 'php /usr/local/www/nextcloud/occ maintenance:install --database "m
 # Add your ip or domain name as a trusted domain for Nextcloud. Remember to adapt this to your needs. Otherwise a warning message will appear in your screen.
 # This setup doesn't use a domain name, it's ready to be used with an IP. Adjust the NIC name with 'em0' or similar here if it's convenient.
 
-TRUSTED_DOMAIN=$(ifconfig | grep "inet " | awk '{ print $2; exit }') && export TRUSTED_DOMAIN && echo $TRUSTED_DOMAIN >> /root/trusted_domain.txt
+TRUSTED_DOMAIN=$(ifconfig | grep "vnet0 " | awk '{ print $2; exit }') && export TRUSTED_DOMAIN && echo $TRUSTED_DOMAIN >> /root/trusted_domain.txt
 
 su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set trusted_domains 1 --value="$TRUSTED_DOMAIN"'
+su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set trusted_domains 2 --value="drive.infogr.com.br"'
 
 # No one but root can read these files. Read only permissions.
 chmod 400 /root/db_root_pwd.txt
