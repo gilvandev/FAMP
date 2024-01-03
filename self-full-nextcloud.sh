@@ -28,9 +28,9 @@
 ##########################################################
 
 # Message for the user before anything is done
-echo "Make sure you have set this script with the correct -subj content, such as country, state, city, organization name, common name and email before its first use.\n"
+echo "Make sure you have set this script with the correct -subj content, such as country, state, city, organization name, common name and email before its first use."
 
-echo "In other words, don't use this script blindly without changing the -subj content first. Press Ctrl C to cancel this operation if in need. You have 15 seconds.\n"
+echo "In other words, don't use this script blindly without changing the -subj content first. Press Ctrl C to cancel this operation if in need. You have 15 seconds."
 
 sleep 15
 
@@ -38,15 +38,15 @@ sleep 15
 mkdir /usr/local/tls
 
 # Generate the CA primary key
-echo "Generating the CA primary key\n"
+echo "Generating the CA primary key"
 openssl genrsa 2048 > /usr/local/tls/ca-key.pem
 
 # Generate the CA certificate from the primary key
-echo "Producing the primary certificate with the CA's key.\n"
+echo "Producing the primary certificate with the CA's key."
 openssl req -new -x509 -nodes -days 730 -key /usr/local/tls/ca-key.pem -out /usr/local/tls/ca-cert.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
 
 # Generate the server's key and certificate pair
-echo "Generating serve's key and certificate pair.\n"
+echo "Generating serve's key and certificate pair."
 
 # 1.- Generate a new key for the server plus a certificate request
 openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/server-key.pem -out /usr/local/tls/server-req.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
@@ -57,10 +57,10 @@ openssl rsa -in /usr/local/tls/server-key.pem -out /usr/local/tls/server-key.pem
 # 3.- Generate the server's certificate via the x509 protocol from the cert request plus the server's key with a serial number.
 openssl x509 -req -in /usr/local/tls/server-req.pem -days 730 -CA /usr/local/tls/ca-cert.pem -CAkey /usr/local/tls/ca-key.pem -set_serial 01 -out /usr/local/tls/server-cert.pem
 
-echo "Server's certificate and key pair have been generated.\n"
+echo "Server's certificate and key pair have been generated."
 
 # Generate the client's certificate and key pairs
-echo "Generating client's key and certificate pair.\n"
+echo "Generating client's key and certificate pair."
 
 # 1.- Generate a new key for the client plus a certificate request
 openssl req -newkey rsa:2048 -days 730 -nodes -keyout /usr/local/tls/client-key.pem -out /usr/local/tls/client-req.pem -subj "/C=BR/ST=MG/L=Conceicao/O=GRInfo Ltd/CN=drive.infogr.com.br/emailAddress=contato@gilvandev.com.br"
@@ -71,20 +71,20 @@ openssl rsa -in /usr/local/tls/client-key.pem -out /usr/local/tls/client-key.pem
 # 3.- Generate the client's certificate via the x509 protocol from the cert request plus the client's key with a serial number.
 openssl x509 -req -in /usr/local/tls/client-req.pem -days 730 -CA /usr/local/tls/ca-cert.pem -CAkey /usr/local/tls/ca-key.pem -set_serial 01 -out /usr/local/tls/client-cert.pem
 
-echo "Client's certificate and key pair have been generated.\n"
+echo "Client's certificate and key pair have been generated."
 
 # Check the integrity of the final certificate's with the CA's primary certificate
-echo "Verifying the final certificates for the client and server are intact derivatives from the CA's certificate\n"
+echo "Verifying the final certificates for the client and server are intact derivatives from the CA's certificate"
 openssl verify -CAfile /usr/local/tls/ca-cert.pem /usr/local/tls/server-cert.pem /usr/local/tls/client-cert.pem
 
-echo "If the check response was a pair of OKs, you're done. If otherwise check what went wrong and start it all over again.\n"
+echo "If the check response was a pair of OKs, you're done. If otherwise check what went wrong and start it all over again."
 
-echo "To cancel the operation at this time press Ctrl C. Otherwise wait 15 seconds for the script to resume.\n"
+echo "To cancel the operation at this time press Ctrl C. Otherwise wait 15 seconds for the script to resume."
 
 sleep 15
 
 # Message for the user resuming the progress
-echo "Nextcloud install starts now!\n"
+echo "Nextcloud install starts now!"
 
 # Change the default pkg repository from quarterly to latest
 sed -ip 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf
@@ -417,7 +417,7 @@ service apache24 restart
 sed -i -e 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
-pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo php82-sysvsem php82-exif php82-sodium php-82-bz2
+pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo php82-sysvsem php82-exif php82-sodium php82-bz2
 
 # Configure OPCache for PHP
 sed -i -e '/opcache.enable/s/;opcache.enable=1/opcache.enable=1/' /usr/local/etc/php.ini
@@ -446,18 +446,10 @@ service php-fpm restart
 
 # Install Nextcloud from Nextcloud server
 # Fetch Nextcloud
-#fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
 
 # Unzip Nextcloud
-#unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
-
-# Install Nextcloud from Github
-# Fetch Nextcloud from GitHub (fatest)
-fetch -o /usr/local/www https://codeload.github.com/nextcloud/server/zip/refs/tags/v28.0.1
-
-# Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/server-28.0.1.zip
-mv /usr/local/www/server-28.0.1 /usr/local/www/nextcloud
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
