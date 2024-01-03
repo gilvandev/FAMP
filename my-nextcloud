@@ -3,8 +3,6 @@ echo "################################################"
 echo "############### FAMP Install ###################"
 echo "################################################"
 
-sleep 5
-
 # Update packages list
 pkg update
 
@@ -96,9 +94,7 @@ echo "Your DB_ROOT_PASSWORD is written on this file /root/db_root_pwd.txt"
 # No one but root can read this file. Read only permission.
 chmod 400 /root/db_root_pwd.txt
 
-
 echo '
-
 ################################################
 ############## Apache Security #################
 ################################################
