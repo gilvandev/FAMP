@@ -453,7 +453,7 @@ service php-fpm restart
 
 # Install Nextcloud from Github
 # Fetch Nextcloud from GitHub (fatest)
-fetch -o /usr/local/www https://github.com/nextcloud/server/archive/refs/tags/v28.0.1.zip
+fetch -o /usr/local/www https://codeload.github.com/nextcloud/server/zip/refs/tags/v28.0.1
 
 # Unzip Nextcloud
 unzip -d /usr/local/www/ /usr/local/www/server-28.0.1.zip
