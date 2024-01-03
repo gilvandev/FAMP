@@ -68,8 +68,12 @@ pkg install -y bash pwgen expect
 # Configure PHP (already installed by the previous FAMP script) to use 512M instead of the default 128M
 sed -i -e '/memory_limit/s/128M/512M/' /usr/local/etc/php.ini
 
+# Configuring Uploads
+sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 4G/g' /usr/local/etc/php.ini
+sed -i -e 's/post_max_size = 2M/post_max_size = 4G/g' /usr/local/etc/php.ini
+
 # Install specific PHP dependencies for Nextcloud
-pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo
+pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo php82-sysvsem php82-exif php82-sodium php82-bz2
 
 # Install Nextcloud
 # Fetch Nextcloud
