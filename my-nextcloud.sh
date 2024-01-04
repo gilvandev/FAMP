@@ -2,6 +2,8 @@ echo "##########################################################
 ####################### FAMP #############################
 ##########################################################"
 
+sed -ip 's/quarterly/latest/g' /etc/pkg/FreeBSD.conf
+
 # Update packages list
 pkg update
 
@@ -43,6 +45,15 @@ echo "
         SetHandler application/x-httpd-php-source
     </FilesMatch>
 </IfModule>" >> /usr/local/etc/apache24/modules.d/001_mod-php.conf
+
+sed -i -e 's/#ServerName drive.infogr.com.br:80/ServerName Drive/g' /usr/local/etc/apache24/httpd.conf
+
+# Configure Apache HTTP to use MPM Event instead of the Prefork default
+# Disable the Prefork MPM
+sed -i -e '/prefork/s/LoadModule/#LoadModule/' /usr/local/etc/apache24/httpd.conf
+
+# Enable the Event MPM
+sed -i -e '/event/s/#LoadModule/LoadModule/' /usr/local/etc/apache24/httpd.conf
 
 # Set the PHP's default configuration
 cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
@@ -312,9 +323,6 @@ sed -i -e '/opcache.max_accelerated_files/s/;opcache.max_accelerated_files=4000/
 sed -i -e '/opcache.revalidate_freq/s/;opcache.revalidate_freq=60/opcache.revalidate_freq=60/' /usr/local/etc/php.ini
 sed -i -e '/opcache.fast_shutdown/s/;opcache.fast_shutdown=1/opcache.fast_shutdown=1/' /usr/local/etc/php.ini
 sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /usr/local/etc/php.ini
-
-# Restart the PHP-FPM service so it acknowledges the recently installed PHP packages
-service php-fpm restart
 
 # Install Nextcloud
 # Fetch Nextcloud
