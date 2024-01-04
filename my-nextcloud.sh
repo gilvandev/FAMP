@@ -48,13 +48,6 @@ echo "
 
 sed -i -e 's/##ServerName www.example.com:80/ServerName drive.infogr.com.br/g' /usr/local/etc/apache24/httpd.conf
 
-# Configure Apache HTTP to use MPM Event instead of the Prefork default
-# Disable the Prefork MPM
-sed -i -e '/prefork/s/LoadModule/#LoadModule/' /usr/local/etc/apache24/httpd.conf
-
-# Enable the Event MPM
-sed -i -e '/event/s/#LoadModule/LoadModule/' /usr/local/etc/apache24/httpd.conf
-
 # Set the PHP's default configuration
 cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
 
