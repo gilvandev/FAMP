@@ -60,7 +60,6 @@ cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
 
 # Fire up the services
 echo "####################### APACHE PHP START #######################"
-
 service apache24 start
 service mysql-server start
 
