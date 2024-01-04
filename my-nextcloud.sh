@@ -46,7 +46,7 @@ echo "
     </FilesMatch>
 </IfModule>" >> /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
-sed -i -e 's/#ServerName drive.infogr.com.br:80/ServerName Drive/g' /usr/local/etc/apache24/httpd.conf
+sed -i -e 's/##ServerName www.example.com:80/ServerName drive.infogr.com.br/g' /usr/local/etc/apache24/httpd.conf
 
 # Configure Apache HTTP to use MPM Event instead of the Prefork default
 # Disable the Prefork MPM
