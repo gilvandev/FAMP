@@ -82,7 +82,7 @@ pkg install -y php83-zip php83-mbstring php83-gd php83-zlib php83-curl php83-pdo
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-29.0.4.zip
 
 # Unzip Nextcloud
 unzip -d /usr/local/www/ /usr/local/www/nextcloud-29.0.4.zip
