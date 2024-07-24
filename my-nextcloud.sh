@@ -19,7 +19,7 @@ sysrc apache24_enable="YES"
 
 # Install MySQL
 echo "####################### MYSQL #######################"
-pkg install -y mysql84-server
+pkg install -y mysql80-server
 
 # Add service to be fired up at boot time
 sysrc mysql_enable="YES"
