@@ -26,7 +26,7 @@ sysrc mysql_enable="YES"
 
 # Install PHP 8.2 and its 'funny' dependencies
 echo "####################### PHP 8.2 #######################"
-pkg install -y php82 php82-mysqli mod_php82 php82-extensions
+pkg install -y php83 php83-mysqli mod_php83 php83-extensions
 
 # Install the 'old fashioned' Expect to automate the mysql_secure_installation part
 pkg install -y expect
@@ -296,16 +296,20 @@ echo "####################### NEXTCLOUD #######################"
 pkg install -y bash pwgen expect
 
 # Configure PHP (already installed by the previous FAMP script) to use 512M instead of the default 128M
-sed -i -e '/memory_limit/s/128M/512M/' /usr/local/etc/php.ini
+sed -i -e '/memory_limit/s/128M/1G/' /usr/local/etc/php.ini
 
 # Configuring Uploads
-sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 8G/g' /usr/local/etc/php.ini
-sed -i -e 's/post_max_size = 2M/post_max_size = 8G/g' /usr/local/etc/php.ini
-sed -i -e 's/max_execution_time = 30/post_max_size = 300/g' /usr/local/etc/php.ini
+sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 40G/g' /usr/local/etc/php.ini
+sed -i -e 's/post_max_size = 2M/post_max_size = 40G/g' /usr/local/etc/php.ini
+
+# Other PHP fine adjusts
+sed -i -e 's/;upload_tmp_dir =/upload_tmp_dir = "/temp"' /usr/local/etc/php.ini
+sed -i -e 's/max_input_time = 60/max_input_time = 3600/g' /usr/local/etc/php.ini
+sed -i -e 's/max_execution_time = 60/max_execution_time = 3600/g' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
 echo "####################### PHP DEPENDENCIES #######################"
-pkg install -y php82-zip php82-mbstring php82-gd php82-zlib php82-curl php82-pdo_mysql php82-pecl-imagick php82-intl php82-bcmath php82-gmp php82-fileinfo php82-sysvsem php82-exif php82-sodium php82-bz2
+pkg install -y php83-zip php83-mbstring php83-gd php83-zlib php83-curl php83-pdo_mysql php83-pecl-imagick php83-intl php83-bcmath php83-gmp php83-fileinfo php83-sysvsem php83-exif php83-sodium php83-bz2
 
 # Configure OPCache for PHP
 sed -i -e '/opcache.enable/s/;opcache.enable=1/opcache.enable=1/' /usr/local/etc/php.ini
@@ -318,10 +322,10 @@ sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /u
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-28.0.1.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-29.0.4.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-28.0.1.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-29.0.4.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
@@ -388,7 +392,7 @@ echo "
     ServerAlias Nextcloud
     DocumentRoot "/usr/local/www/nextcloud"
     SSLEngine on
-    SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+    SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1 -TLSc1.2
     SSLHonorCipherOrder on
     SSLCipherSuite  ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
     Include /usr/local/etc/apache24/Includes/headers.conf
