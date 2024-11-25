@@ -25,7 +25,7 @@ pkg install -y mysql80-server
 sysrc mysql_enable="YES"
 
 # Install PHP 8.2 and its 'funny' dependencies
-echo "####################### PHP 8.2 #######################"
+echo "####################### PHP 8.3 #######################"
 pkg install -y php83 php83-mysqli mod_php83 php83-extensions
 
 # Install the 'old fashioned' Expect to automate the mysql_secure_installation part
@@ -276,7 +276,7 @@ pkg install wget
 wget -O /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip https://github.com/coreruleset/coreruleset/archive/refs/tags/v3.3.7.zip
 pkg install -y unzip
 unzip /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip -d /usr/local/etc/modsecurity/
-cp /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.4/crs-setup.conf
+cp /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf
 cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
 cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
 echo '
@@ -455,7 +455,7 @@ su -m www -c 'php /usr/local/www/nextcloud/occ maintenance:install --database "m
 TRUSTED_DOMAIN=$(ifconfig | grep "vnet0 " | awk '{ print $2; exit }') && export TRUSTED_DOMAIN && echo $TRUSTED_DOMAIN >> /root/trusted_domain.txt
 
 su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set trusted_domains 1 --value="$TRUSTED_DOMAIN"'
-su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set trusted_domains 2 --value="drive.infogr.com.br"'
+su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set trusted_domains 2 --value="cloud.postosnetinho.com.br"'
 su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set htaccess.RewriteBase --value="/"'
 su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set logtimezone --value="America/Sao_Paulo"'
 su -m www -c 'php /usr/local/www/nextcloud/occ maintenance:update:htaccess'
