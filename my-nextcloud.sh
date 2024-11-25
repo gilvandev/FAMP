@@ -273,17 +273,17 @@ pkg install -y ap24-mod_security
 
 # Install CRS ruleset for ModSecurity
 pkg install wget 
-wget -O /usr/local/etc/modsecurity/crs-ruleset-3.3.4.zip https://github.com/coreruleset/coreruleset/archive/refs/tags/v3.3.4.zip
+wget -O /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip https://github.com/coreruleset/coreruleset/archive/refs/tags/v3.3.7.zip
 pkg install -y unzip
-unzip /usr/local/etc/modsecurity/crs-ruleset-3.3.4.zip -d /usr/local/etc/modsecurity/
-cp /usr/local/etc/modsecurity/coreruleset-3.3.4/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.4/crs-setup.conf
-cp /usr/local/etc/modsecurity/coreruleset-3.3.4/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.4/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
-cp /usr/local/etc/modsecurity/coreruleset-3.3.4/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.4/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+unzip /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip -d /usr/local/etc/modsecurity/
+cp /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.4/crs-setup.conf
+cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
 echo '
 LoadModule security2_module libexec/apache24/mod_security2.so
 Include /usr/local/etc/modsecurity/*.conf
-Include /usr/local/etc/modsecurity/coreruleset-3.3.4/crs-setup.conf
-Include /usr/local/etc/modsecurity/coreruleset-3.3.4/rules/*.conf
+Include /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf
+Include /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/*.conf
 ' >> /usr/local/etc/apache24/modules.d/280_mod_security.conf
 sed -i -e '/mod_unique_id.so/s/#LoadModule/LoadModule/g' /usr/local/etc/apache24/httpd.conf
 sed -i -e 'SecRuleEngine DetectionOnly/s/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /usr/local/etc/modsecurity/modsecurity.conf
@@ -322,10 +322,10 @@ sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /u
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-29.0.4.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-30.0.2.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-29.0.4.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-30.0.2.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
