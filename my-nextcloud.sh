@@ -300,12 +300,13 @@ sed -i -e '/memory_limit/s/128M/1G/' /usr/local/etc/php.ini
 
 # Configuring Uploads
 sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 40G/g' /usr/local/etc/php.ini
-sed -i -e 's/post_max_size = 2M/post_max_size = 40G/g' /usr/local/etc/php.ini
+sed -i -e 's/post_max_size = 8M/post_max_size = 40G/g' /usr/local/etc/php.ini
 
 # Other PHP fine adjusts
 sed -i -e 's/;upload_tmp_dir =/upload_tmp_dir = "/temp"' /usr/local/etc/php.ini
 sed -i -e 's/max_input_time = 60/max_input_time = 3600/g' /usr/local/etc/php.ini
 sed -i -e 's/max_execution_time = 60/max_execution_time = 3600/g' /usr/local/etc/php.ini
+sed -i -e 's/max_input_vars = 1000/max_input_vars = 10000/g' /usr/local/etc/php.ini
 
 # Install specific PHP dependencies for Nextcloud
 echo "####################### PHP DEPENDENCIES #######################"
@@ -322,10 +323,10 @@ sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /u
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-30.0.2.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-30.0.4.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-30.0.2.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-30.0.4.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
