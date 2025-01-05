@@ -387,6 +387,9 @@ echo "
     RewriteCond %{HTTPS}  !=on
     RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
     Protocols h2 h2c http/1.1
+    <Directory "/usr/local/www/nextcloud">
+    	LimitRequestBody 0
+    </Directory>
 </VirtualHost>
 <VirtualHost *:443>
     ServerName Nextcloud
@@ -402,6 +405,9 @@ echo "
     ErrorLog "/var/log/nextcloud-error_log"
     CustomLog "/var/log/nextcloud-access_log" common
     Protocols h2 http/1.1
+    <Directory "/usr/local/www/nextcloud">
+    	LimitRequestBody 0
+    </Directory>
 </VirtualHost>" >> /usr/local/etc/apache24/extra/httpd-vhosts.conf
 
 # Restart Apache service
