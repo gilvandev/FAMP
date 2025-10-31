@@ -46,7 +46,7 @@ echo "
     </FilesMatch>
 </IfModule>" >> /usr/local/etc/apache24/modules.d/001_mod-php.conf
 
-sed -i -e 's/##ServerName www.example.com:80/ServerName drive.infogr.com.br/g' /usr/local/etc/apache24/httpd.conf
+sed -i -e 's/##ServerName www.example.com:80/ServerName cloud.postosnetinho.com.br/g' /usr/local/etc/apache24/httpd.conf
 
 # Set the PHP's default configuration
 cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
@@ -303,7 +303,7 @@ sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 40G/g' /usr/local/et
 sed -i -e 's/post_max_size = 8M/post_max_size = 40G/g' /usr/local/etc/php.ini
 
 # Other PHP fine adjusts
-sed -i -e 's/;upload_tmp_dir =/upload_tmp_dir = "/temp"' /usr/local/etc/php.ini
+sed -i -e 's/;upload_tmp_dir =/upload_tmp_dir = "/tmp"' /usr/local/etc/php.ini
 sed -i -e 's/max_input_time = 60/max_input_time = 36000/g' /usr/local/etc/php.ini
 sed -i -e 's/max_execution_time = 60/max_execution_time = 36000/g' /usr/local/etc/php.ini
 sed -i -e 's/max_input_vars = 1000/max_input_vars = 150000/g' /usr/local/etc/php.ini
