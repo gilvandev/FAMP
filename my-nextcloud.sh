@@ -24,7 +24,7 @@ pkg install -y mysql80-server
 # Add service to be fired up at boot time
 sysrc mysql_enable="YES"
 
-# Install PHP 8.2 and its 'funny' dependencies
+# Install PHP 8.3 and its 'funny' dependencies
 echo "####################### PHP 8.3 #######################"
 pkg install -y php83 php83-mysqli mod_php83 php83-extensions
 
@@ -323,10 +323,10 @@ sed -i -e '/opcache.enable_cli/s/;opcache.enable_cli=1/opcache.enable_cli=1/' /u
 
 # Install Nextcloud
 # Fetch Nextcloud
-fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-31.0.2.zip
+fetch -o /usr/local/www https://download.nextcloud.com/server/releases/nextcloud-32.0.1.zip
 
 # Unzip Nextcloud
-unzip -d /usr/local/www/ /usr/local/www/nextcloud-31.0.2.zip
+unzip -d /usr/local/www/ /usr/local/www/nextcloud-32.0.1.zip
 
 # Change the ownership so the Apache user (www) owns it
 chown -R www:www /usr/local/www/nextcloud
