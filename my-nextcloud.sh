@@ -269,21 +269,25 @@ service apache24 restart
 
 # Install ModSecurity
 echo "####################### APACHE MOD_SECURITY #######################"
+
+# SE NÃO FUNCIONAR, VOLTAR PARA A VERSÃO 3.3.7.zip
+# PROBLEMAS COM UPLOADS NESSA VERSÃO EM OUTUBRO DE 2025
+
 pkg install -y ap24-mod_security
 
 # Install CRS ruleset for ModSecurity
 pkg install wget 
-wget -O /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip https://github.com/coreruleset/coreruleset/archive/refs/tags/v3.3.7.zip
+wget -O /usr/local/etc/modsecurity/crs-ruleset-4.19.0.zip https://github.com/coreruleset/coreruleset/archive/refs/tags/v4.19.0.zip
 pkg install -y unzip
-unzip /usr/local/etc/modsecurity/crs-ruleset-3.3.7.zip -d /usr/local/etc/modsecurity/
-cp /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf
-cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
-cp /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+unzip /usr/local/etc/modsecurity/crs-ruleset-4.19.0.zip -d /usr/local/etc/modsecurity/
+cp /usr/local/etc/modsecurity/coreruleset-4.19.0/crs-setup.conf.example /usr/local/etc/modsecurity/coreruleset-4.19.0/crs-setup.conf
+cp /usr/local/etc/modsecurity/coreruleset-4.19.0/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-4.19.0/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+cp /usr/local/etc/modsecurity/coreruleset-4.19.0/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/etc/modsecurity/coreruleset-4.19.0/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
 echo '
 LoadModule security2_module libexec/apache24/mod_security2.so
 Include /usr/local/etc/modsecurity/*.conf
-Include /usr/local/etc/modsecurity/coreruleset-3.3.7/crs-setup.conf
-Include /usr/local/etc/modsecurity/coreruleset-3.3.7/rules/*.conf
+Include /usr/local/etc/modsecurity/coreruleset-4.19.0/crs-setup.conf
+Include /usr/local/etc/modsecurity/coreruleset-4.19.0/rules/*.conf
 ' >> /usr/local/etc/apache24/modules.d/280_mod_security.conf
 sed -i -e '/mod_unique_id.so/s/#LoadModule/LoadModule/g' /usr/local/etc/apache24/httpd.conf
 sed -i -e 'SecRuleEngine DetectionOnly/s/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /usr/local/etc/modsecurity/modsecurity.conf
